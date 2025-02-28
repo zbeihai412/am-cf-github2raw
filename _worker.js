@@ -65,7 +65,10 @@ function constructGithubUrl(pathname, env) {
 // Retrieve token from search params or environment variables
 function getToken(searchParams, env) {
     const searchToken = searchParams.get('token');
-    return searchToken || env.GH_TOKEN || env.TOKEN || null;
+    if (env.TOKEN &&  env.TOKEN != searchToken ){
+       return new Response('please check the token ', { status: 400 });
+    }
+   return env.GH_TOKEN || env.TOKEN || null;
 }
 
 // Simple nginx HTML page
