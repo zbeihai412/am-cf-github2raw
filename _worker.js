@@ -49,9 +49,17 @@ export default {
 
 // Construct GitHub raw content URL based on the environment variables and pathname
 function constructGithubUrl(pathname, env) {
-    const baseUrl = 'https://raw.githubusercontent.com';
-    const path = pathname.startsWith(baseUrl) ? pathname.split(baseUrl)[1] : `/${env.GH_NAME}/${env.GH_REPO}/${env.GH_BRANCH}${pathname}`;
-    return `${baseUrl}${path}`.replace(/\/+/g, '/');
+   const baseUrl = 'https://raw.githubusercontent.com';
+    
+    if (pathname.startsWith(baseUrl)) {
+        return pathname; 
+    }
+    
+    let url = `${baseUrl}/${env.GH_NAME || ''}/${env.GH_REPO || ''}/${env.GH_BRANCH || ''}`.replace(/\/+/g, '/');
+    
+    url += pathname;
+
+    return url.replace(/\/+/g, '/'); 
 }
 
 // Retrieve token from search params or environment variables
