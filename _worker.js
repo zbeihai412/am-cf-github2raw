@@ -4,27 +4,7 @@
  * GitHub Repository: https://github.com/amclubs
  * Personal Blog: https://am.809098.xyz
  */
-addEventListener('fetch', event => {
-  event.respondWith(handleRequest(event.request))
-})
 
-async function handleRequest(request) {
-  // 替换为你的本地 Nginx 服务的 IP 地址和端口
-  const targetUrl = 'http://192.168.1.100:80'; 
-
-  // 克隆请求以避免修改原始请求
-  const newRequest = new Request(targetUrl + request.url.split(request.url.includes('://') ? request.url.split('://')[1].split('/')[0] : request.url.split('/')[0]).pop(), {
-    headers: request.headers,
-    method: request.method,
-    body: request.body,
-    redirect: request.redirect
-  })
-
-  // 发送请求到目标 URL
-  const response = await fetch(newRequest)
-
-  return response
-}
     
 
 let token = "";
